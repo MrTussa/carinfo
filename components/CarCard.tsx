@@ -12,19 +12,11 @@ interface CarCardProps {
 }
 
 const CarCard = ({ car }: CarCardProps) => {
-  const { city_mpg, year, make, model, transmission, drive } = car;
+  const { year, make, model, transmission, fuel_type, power, price } = car;
 
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="car-card group">
-      <div className="car-card__content">
-        <h2 className="car-card__content-title">
-          {make} {model}
-        </h2>
-      </div>
-      <p className="flex mt-6 text-[32px] font-extrabold">
-        <span className="self-start text-[14px] font-semibold">40$</span>
-      </p>
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
           src="/hero.png"
@@ -34,10 +26,17 @@ const CarCard = ({ car }: CarCardProps) => {
           className="object-contain"
         />
       </div>
+      <div className="car-card__content">
+        <h2 className="car-card__content-model">{model}</h2>
+        <h3 className="car-card__content-manufacturer">{make}</h3>
+      </div>
+      <p className="car-card__price">
+        <span>100.000.000 сум</span>
+      </p>
 
       <div className="relative flex w-full mt-2">
-        <div className="flex group-hover:invisible w-full justify-between text-gray">
-          <div className="flex flex-col justify-center items-center gap-2">
+        <div className="car-card__icon-container">
+          <div className="car-card__icon">
             <Image
               src="/steering-wheel.svg"
               width={20}
@@ -48,13 +47,13 @@ const CarCard = ({ car }: CarCardProps) => {
               {transmission === "a" ? "Автомат" : "Ручная"}
             </p>
           </div>
-          <div className="flex flex-col justify-center items-center gap-2">
+          <div className="car-card__icon">
             <Image src="/tire.svg" width={20} height={20} alt="tire" />
-            <p className="text-[14px]">{drive.toUpperCase()}</p>
+            <p className="text-[14px]">{power} Л/С</p>
           </div>
-          <div className="flex flex-col justify-center items-center gap-2">
+          <div className="car-card__icon">
             <Image src="/gas.svg" width={20} height={20} alt="расход топлива" />
-            <p className="text-[14px]">{city_mpg} Л/КЛ</p>
+            <p className="text-[14px]">{fuel_type}</p>
           </div>
         </div>
         <div className="car-card__btn-container">

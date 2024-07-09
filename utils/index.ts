@@ -20,3 +20,11 @@ export async function fetchCars(filters: FilterProps) {
       
       return responce.data
 }
+
+export const updateSearchParams = (type:string, value:string) => {
+  const seachParams = new URLSearchParams(window.location.search);
+
+  seachParams.set(type, value);
+  const newPathname = `${window.location.pathname}?${seachParams.toString()}`;
+  return newPathname
+}
