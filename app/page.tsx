@@ -4,7 +4,7 @@ import { fetchCars } from "@/utils";
 import Image from "next/image";
 // import { useSearchParams } from "next/navigation";
 
-export default async function Home({ searchParams }) {
+export default async function Home({  }) {
   // const searchParams = useSearchParams();
   const allCars = await fetchCars({
     manufacturer: searchParams.manufacturer || "",
