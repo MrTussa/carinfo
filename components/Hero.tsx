@@ -8,7 +8,14 @@ import awesomeVideo from "/videos/mixkit-classic-red-sports-car-5017-full-hd.mp4
 import { useState, useCallback } from "react";
 
 const Hero = () => {
-  const handleScroll = () => {};
+  const handleScroll = () => {
+    const element = document.getElementById("cars_container");
+    element?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+      inline: "nearest",
+    });
+  };
   return (
     <div className="hero relative">
       <BackgroundVideo

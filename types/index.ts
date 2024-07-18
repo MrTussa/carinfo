@@ -20,13 +20,14 @@ export interface SeachManufacturerProps {
 export interface CarProps { 
     class:string;
     cylinders:number;
-    fuel_type:string;
+    fuel_types:string;
     make:string;
     model:string;
     transmission:string;
     power:number
     year:number;
     price: number;
+    id:number;
 }
 export interface FilterProps {
     manufacturer: string
@@ -46,6 +47,6 @@ export interface CustomFilterProps {
 }
 
 export interface ShowMoreProps {
-    pageNumber:number
-    allPages:number
+    pageNumber:number;
+    isNext:boolean;
 }

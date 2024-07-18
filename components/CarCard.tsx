@@ -1,20 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 
 import { CarProps } from "@/types";
 import CustomButton from "./CustomButton";
-import { CarDetails } from ".";
+import { useRouter } from "next/navigation";
 
 interface CarCardProps {
   car: CarProps;
 }
 
 const CarCard = ({ car }: CarCardProps) => {
-  const { year, make, model, transmission, fuel_type, power, price } = car;
+  const { year, make, model, transmission, fuel_types, power, price, id } = car;
+  const router = useRouter();
 
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="car-card group">
       <div className="relative w-full h-40 my-3 object-contain">
@@ -31,7 +30,9 @@ const CarCard = ({ car }: CarCardProps) => {
         <h3 className="car-card__content-manufacturer">{make}</h3>
       </div>
       <p className="car-card__price">
-        <span>100.000.000 сум</span>
+        <span>
+          {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} сум
+        </span>
       </p>
 
       <div className="relative flex w-full mt-2">
@@ -44,7 +45,7 @@ const CarCard = ({ car }: CarCardProps) => {
               alt="коробка передач"
             />
             <p className="text-[14px]">
-              {transmission === "a" ? "Автомат" : "Ручная"}
+              {transmission === "Автомат" ? "Автомат" : "Ручная"}
             </p>
           </div>
           <div className="car-card__icon">
@@ -53,7 +54,7 @@ const CarCard = ({ car }: CarCardProps) => {
           </div>
           <div className="car-card__icon">
             <Image src="/gas.svg" width={20} height={20} alt="расход топлива" />
-            <p className="text-[14px]">{fuel_type}</p>
+            <p className="text-[14px]">{fuel_types}</p>
           </div>
         </div>
         <div className="car-card__btn-container">
@@ -62,17 +63,16 @@ const CarCard = ({ car }: CarCardProps) => {
             containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
             textStyles="text-white text-[14px] leading-[17px] font-bold"
             rightIcon="/right-arrow.svg"
-            handleClick={() => setIsOpen(true)}
+            handleClick={() => router.push(`/car/${id}`)}
           />
         </div>
       </div>
-      <CarDetails
+      {/* <CarDetails
         isOpen={isOpen}
         closeModal={() => setIsOpen(false)}
         car={car}
-      />
+      /> */}
     </div>
   );
 };
-// TODO: Добавить цену машины
 export default CarCard;

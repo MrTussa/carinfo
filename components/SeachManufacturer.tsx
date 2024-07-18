@@ -43,36 +43,38 @@ const SeachManufacturer = ({
               alt="Car Logo"
             />
           </ComboboxButton>
-          <ComboboxInput
-            className="search-manufacturer__input"
-            placeholder="Nexia"
-            displayValue={(manufacturer: string) => manufacturer}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          <div className="relative">
+            <ComboboxInput
+              className="search-manufacturer__input"
+              placeholder="Nexia"
+              displayValue={(manufacturer: string) => manufacturer}
+              onChange={(e) => setQuery(e.target.value)}
+            />
 
-          <Transition
-            as={Fragment}
-            leave="transion ease-in duration-100"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-            afterLeave={() => setQuery("")}
-          >
-            <ComboboxOptions>
-              {filteredManufacterers.map((item) => (
-                <ComboboxOption
-                  key={item}
-                  value={item}
-                  className={({ focus }) =>
-                    `relative search-manufacturer__option ${
-                      focus ? "bg-primary-blue text-white" : "text-gray-900"
-                    }`
-                  }
-                >
-                  {item}
-                </ComboboxOption>
-              ))}
-            </ComboboxOptions>
-          </Transition>
+            <Transition
+              as={Fragment}
+              leave="transion ease-in duration-100"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+              afterLeave={() => setQuery("")}
+            >
+              <ComboboxOptions className="absolute bg-white shadow-lg rounded-lg z-10">
+                {filteredManufacterers.map((item) => (
+                  <ComboboxOption
+                    key={item}
+                    value={item}
+                    className={({ focus }) =>
+                      `relative search-manufacturer__option ${
+                        focus ? "bg-primary-blue text-white" : "text-gray-900"
+                      }`
+                    }
+                  >
+                    {item}
+                  </ComboboxOption>
+                ))}
+              </ComboboxOptions>
+            </Transition>
+          </div>
         </div>
       </Combobox>
     </div>

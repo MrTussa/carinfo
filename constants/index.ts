@@ -31,15 +31,15 @@ export const manufacturers = [
     },
     {
       title: "Бензин",
-      value: "Бензин",
+      value: "бензин",
     },
     {
       title: "Газ",
-      value: "Газ",
+      value: "газ",
     },
     {
       title: "Электричество",
-      value: "Электричество",
+      value: "электричество",
     },
   ];
   
