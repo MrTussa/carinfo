@@ -220,3 +220,9 @@
   @apply cursor-default select-none py-2 pl-10 pr-10 rounded-lg;
 }
 /* END: search manufacturer styles */
+
+/* START: Card styles */
+.card__main {
+  @apply w-full p-6 mt-6 text-black-100 bg-primary-blue-100 shadow-lg rounded-3xl mx-5;
+}
+/* END: Card styles */
