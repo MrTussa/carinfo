@@ -50,3 +50,7 @@ export interface ShowMoreProps {
     pageNumber:number;
     isNext:boolean;
 }
+
+export interface CarouselProps {
+    images: string[]
+}

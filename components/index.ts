@@ -8,6 +8,7 @@ import SeachManufacturer from "./SeachManufacturer"
 import CarCard from "./CarCard"
 import CarDetails from "./CarDetails"
 import ShowMore from "./ShowMore"
+import Carousel from "./Carousel"
 
 
 
@@ -23,4 +24,5 @@ export {
     CarCard,
     CarDetails,
     ShowMore,
+    Carousel,
 }
