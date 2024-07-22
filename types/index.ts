@@ -54,3 +54,11 @@ export interface ShowMoreProps {
 export interface CarouselProps {
     images: string[]
 }
+
+export interface SearchParamsProps {
+    manufacturer: string;
+    year: number;
+    fuel: string;
+    limit: number;
+    model: string;
+}
