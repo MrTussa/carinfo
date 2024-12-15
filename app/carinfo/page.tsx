@@ -7,13 +7,14 @@ export default async function Home({
 }: {
   searchParams: SearchParamsProps;
 }) {
-  const allCars = await fetchCars({
-    manufacturer: searchParams.manufacturer || "",
-    year: searchParams.year || 2024,
-    fuel: searchParams.fuel || "",
-    limit: searchParams.limit || 10,
-    model: searchParams.model || "",
-  });
+  const allCars = {};
+  // await fetchCars({
+  //   manufacturer: searchParams.manufacturer || "",
+  //   year: searchParams.year || 2024,
+  //   fuel: searchParams.fuel || "",
+  //   limit: searchParams.limit || 10,
+  //   model: searchParams.model || "",
+  // });
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
@@ -37,9 +38,7 @@ export default async function Home({
         {!isDataEmpty ? (
           <section id="cars_container">
             <div className="home__cars-wrapper">
-              {allCars?.map((car, index) => (
-                <CarCard car={car} key={index} />
-              ))}
+              {allCars?.map((car, index) => <CarCard car={car} key={index} />)}
             </div>
 
             <ShowMore
