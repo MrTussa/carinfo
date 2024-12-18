@@ -13,14 +13,22 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    cars: Car;
+    manufacturers: Manufacturer;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    manufacturers: {
+      cars: 'cars';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    cars: CarsSelect<false> | CarsSelect<true>;
+    manufacturers: ManufacturersSelect<false> | ManufacturersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -92,6 +100,97 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    banner?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cars".
+ */
+export interface Car {
+  id: string;
+  title?: string | null;
+  model?: string | null;
+  description?: string | null;
+  year?: number | null;
+  transmission?:
+    | (
+        | 'Automatic Transmission'
+        | 'Manual Transmission'
+        | 'Dual-clutch transmission'
+        | 'Automated Manual Transmission'
+        | 'Continuously Variable Transmission'
+      )
+    | null;
+  fuelType?: ('Petrol' | 'Diesel' | 'Electric' | 'Hybrid' | 'Hydrogen') | null;
+  manufacturer?: (string | null) | Manufacturer;
+  featuredImage?: (string | null) | Media;
+  colorOptions?:
+    | {
+        color?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  seatingCapacity?: number | null;
+  bodyType?: ('Sedan' | 'SUV' | 'Hatchback' | 'Coupe' | 'Convertible' | 'Wagon' | 'Pickup Truck' | 'Van') | null;
+  engineSpecifications?: {
+    engineType?: string | null;
+    horsePower?: number | null;
+    torque?: number | null;
+    cylinders?: number | null;
+  };
+  dimensions?: {
+    length?: number | null;
+    width?: number | null;
+    height?: number | null;
+    wheelbase?: number | null;
+  };
+  mileage?: {
+    city?: number | null;
+    highway?: number | null;
+  };
+  safetyFeatures?:
+    | {
+        feature?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  price?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "manufacturers".
+ */
+export interface Manufacturer {
+  id: string;
+  title?: string | null;
+  description?: string | null;
+  year?: number | null;
+  logo?: (string | null) | Media;
+  cars?: {
+    docs?: (string | Car)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -107,6 +206,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'cars';
+        value: string | Car;
+      } | null)
+    | ({
+        relationTo: 'manufacturers';
+        value: string | Manufacturer;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -182,6 +289,96 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        banner?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cars_select".
+ */
+export interface CarsSelect<T extends boolean = true> {
+  title?: T;
+  model?: T;
+  description?: T;
+  year?: T;
+  transmission?: T;
+  fuelType?: T;
+  manufacturer?: T;
+  featuredImage?: T;
+  colorOptions?:
+    | T
+    | {
+        color?: T;
+        id?: T;
+      };
+  seatingCapacity?: T;
+  bodyType?: T;
+  engineSpecifications?:
+    | T
+    | {
+        engineType?: T;
+        horsePower?: T;
+        torque?: T;
+        cylinders?: T;
+      };
+  dimensions?:
+    | T
+    | {
+        length?: T;
+        width?: T;
+        height?: T;
+        wheelbase?: T;
+      };
+  mileage?:
+    | T
+    | {
+        city?: T;
+        highway?: T;
+      };
+  safetyFeatures?:
+    | T
+    | {
+        feature?: T;
+        id?: T;
+      };
+  price?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "manufacturers_select".
+ */
+export interface ManufacturersSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  year?: T;
+  logo?: T;
+  cars?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

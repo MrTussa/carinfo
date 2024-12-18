@@ -51,7 +51,7 @@
 }
 
 .hero__image-container {
-  @apply xl:flex-[0.7] flex justify-end items-end w-full xl:h-screen;
+  @apply xl:flex-[1.5] flex justify-end items-end w-full xl:h-screen;
 }
 
 .hero__image {
@@ -88,7 +88,7 @@
 
 /* START: Car Card styles */
 .car-card {
-  @apply flex flex-col p-6 justify-center items-start text-black-100 bg-primary-blue-100 hover:bg-white hover:shadow-md rounded-3xl;
+  @apply flex flex-col pb-6 pl-6 pr-6 justify-center items-start text-black-100;
 }
 
 .car-card__content {
@@ -131,7 +131,7 @@
 }
 
 .car-card__btn-container {
-  @apply hidden group-hover:flex absolute bottom-0 w-full z-10;
+  @apply hidden group-hover:flex absolute bottom-0 w-full z-10 transition-opacity;
 }
 /* END: Car Card styles */
 

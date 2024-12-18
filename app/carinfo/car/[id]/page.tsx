@@ -1,8 +1,8 @@
-import { fetchCarById } from "@/utils";
+import { fetchCarById } from "@/app/carinfo/utils";
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import Image from "next/image";
-import { Carousel } from "@/components";
+import { Carousel } from "@/app/carinfo/components";
 
 const Page = async ({ params }: { params: { id: string } }) => {
   const carDetails = await fetchCarById(Number(params.id));
