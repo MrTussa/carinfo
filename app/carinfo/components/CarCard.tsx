@@ -23,8 +23,6 @@ const CarCard = ({ car }: CarCardProps) => {
   } = car;
   const router = useRouter();
 
-  console.log(transmission);
-
   const makeAbbr = (transmission: string) =>
     transmission
       .split(" ")
@@ -39,8 +37,9 @@ const CarCard = ({ car }: CarCardProps) => {
           // "/hero.png"
           alt="car mode"
           fill
+          sizes="300px 160px"
           priority
-          className="object-fill rounded-t-3xl"
+          className="object-cover rounded-t-3xl"
         />
       </div>
       <div className="car-card">
@@ -78,8 +77,9 @@ const CarCard = ({ car }: CarCardProps) => {
             <div className="car-card__icon">
               <Image
                 src="/gas.svg"
-                width={20}
+                width={18}
                 height={20}
+                className="w-auto"
                 alt="Fuel consomption"
               />
               <p className="text-[14px]">{fuelType}</p>
@@ -91,7 +91,7 @@ const CarCard = ({ car }: CarCardProps) => {
               containerStyles="w-full py-[16px] rounded-full bg-primary-blue"
               textStyles="text-white text-[14px] leading-[17px] font-bold"
               rightIcon="/right-arrow.svg"
-              handleClick={() => router.push(`/car/${id}`)}
+              handleClick={() => router.push(`/carinfo/car/${id}`)}
             />
           </div>
         </div>
