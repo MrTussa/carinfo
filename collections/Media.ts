@@ -24,6 +24,11 @@ export const Media: CollectionConfig = {
         name: "banner",
         width: 1024,
         height: 640,
+      },
+      {
+        name: "squere",
+        width:100,
+        height:100,
       }
     ]
   },

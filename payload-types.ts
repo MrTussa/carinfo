@@ -117,6 +117,14 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
+    squere?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
   };
 }
 /**
@@ -141,6 +149,12 @@ export interface Car {
   fuelType?: ('Petrol' | 'Diesel' | 'Electric' | 'Hybrid' | 'Hydrogen') | null;
   manufacturer?: (string | null) | Manufacturer;
   featuredImage?: (string | null) | Media;
+  gallery?:
+    | {
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   colorOptions?:
     | {
         color?: string | null;
@@ -312,6 +326,16 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
+        squere?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
       };
 }
 /**
@@ -327,6 +351,12 @@ export interface CarsSelect<T extends boolean = true> {
   fuelType?: T;
   manufacturer?: T;
   featuredImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   colorOptions?:
     | T
     | {

@@ -58,6 +58,17 @@ export const Cars: CollectionConfig = {
       relationTo: "media",
     },
     {
+      name: 'gallery',
+      type: 'array',
+      fields: [
+        {
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
+        },
+      ],
+    },
+    {
       name: "colorOptions",
       type: "array",
       fields: [

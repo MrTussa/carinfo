@@ -1,5 +1,6 @@
 import { manufacturers } from '../constants/index';
 import { MouseEventHandler } from "react";
+import {Car} from "@payload-types"
 
 export interface CustomButtonProps {
     title: string;
@@ -56,7 +57,7 @@ export interface ShowMoreProps {
 }
 
 export interface CarouselProps {
-    images: string[]
+    images: Exclude<Car['gallery'], null | undefined>;
 }
 
 export interface SearchParamsProps {
