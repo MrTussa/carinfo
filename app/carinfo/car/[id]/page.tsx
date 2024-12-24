@@ -1,15 +1,12 @@
 // import { Container, Grid } from "@mui/material";
-import { Carousel } from "@/app/carinfo/components";
+import { Carousel, LogoButton } from "@/app/carinfo/components";
 
 import configPromise from "@payload-config";
 import Image from "next/image";
 import { getPayload } from "payload";
-
 import { Media } from "@payload-types";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const images = ["/hero.png", "/hero.png", "/hero.png", "/hero.png"];
-
   const payload = getPayload({ config: configPromise });
 
   const data = (await payload).findByID({
@@ -42,12 +39,18 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="flex items-center space-x-4">
           {/* Types check */}
           {manufacturer && typeof manufacturer !== "string" && (
-            <Image
-              src={(manufacturer.logo as Media)?.thumbnailURL ?? ""}
-              alt={`${manufacturer.title ?? ""} logo`}
+            // <Image
+            //   src={(manufacturer.logo as Media)?.thumbnailURL ?? ""}
+            //   alt={`${manufacturer.title ?? ""} logo`}
+            //   width={48}
+            //   height={48}
+            //   className="rounded-full"
+            // />
+            <LogoButton
+              logo={(manufacturer.logo as Media)?.thumbnailURL ?? ""}
               width={48}
               height={48}
-              className="rounded-full"
+              id={manufacturer.id ?? ""}
             />
           )}
           <span className="text-xl font-semibold">{title}</span>
@@ -57,7 +60,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
       <div className="flex flex-col sm:flex-row mx-16 gap-8">
         <section className="w-2/3 flex-grow rounded-lg border p-4 border-gray-300">
-          <Carousel images={gallery} />
+          <Carousel gallery={gallery} />
           <h2 className="text-2xl font-semibold my-4">{model}</h2>
           <p className="text-gray-600">{description}</p>
         </section>
