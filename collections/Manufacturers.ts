@@ -24,6 +24,26 @@ export const Manufacturers: CollectionConfig = {
         relationTo: "media",
       },
       {
+        name: "imageCover",
+        type: "upload",
+        relationTo: "media"
+      },
+      {
+        name: "locations",
+        type: "array",
+        fields: [
+          {
+            name: "location",
+            type: "text",
+          },
+          {
+            name: "locationImage",
+            type:"upload",
+            relationTo: "media"
+          }
+        ]
+      },
+      {
         name: "cars",
         type: "join",
         on: "manufacturer",
