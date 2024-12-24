@@ -32,15 +32,16 @@ const CarCard = ({ car }: CarCardProps) => {
   return (
     <div className="bg-primary-blue-100 transition-all hover:bg-white hover:shadow-md rounded-3xl group">
       <div className="relative w-full h-40 mb-3">
-        <Image
-          src={featuredImage!.sizes.thumbnail.url}
-          // "/hero.png"
-          alt="car mode"
-          fill
-          sizes="300px 160px"
-          priority
-          className="object-cover rounded-t-3xl"
-        />
+        {featuredImage && model && (
+          <Image
+            src={featuredImage!.sizes.thumbnail.url}
+            alt={model}
+            fill
+            sizes="300px 160px"
+            priority
+            className="object-cover rounded-t-3xl"
+          />
+        )}
       </div>
       <div className="car-card">
         <div className="car-card__content">

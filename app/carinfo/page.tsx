@@ -35,7 +35,6 @@ export default async function Home({
   const allCars = (await res).docs;
 
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
-  console.log(Array.isArray(allCars));
 
   return (
     <main className="overflow-hidden">

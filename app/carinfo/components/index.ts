@@ -9,6 +9,7 @@ import CarCard from "./CarCard"
 import CarDetails from "./CarDetails"
 import ShowMore from "./ShowMore"
 import Carousel from "./Carousel"
+import LogoButton from "./LogoButton"
 
 
 
@@ -25,4 +26,5 @@ export {
     CarDetails,
     ShowMore,
     Carousel,
+    LogoButton,
 }
