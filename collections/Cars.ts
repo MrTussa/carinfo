@@ -26,6 +26,36 @@ export const Cars: CollectionConfig = {
       type: "number",
     },
     {
+      name: "engineSpecifications",
+      type: "group",
+      fields: [
+        {
+          name: "engineType",
+          type: "text",
+        },
+        {
+          name: "horsePower",
+          type: "number",
+        },
+        {
+          name: "torque",
+          type: "number",
+        },
+        {
+          name: "cylinders",
+          type: "number",
+        },
+      ],
+    },
+    {
+      name: "acceleration",
+      type: "text"
+    },
+    {
+      name: "topSpeed",
+      type: "number"
+    },
+    {
       name: "transmission",
       type: "select",
       options: [
@@ -97,26 +127,8 @@ export const Cars: CollectionConfig = {
       ],
     },
     {
-      name: "engineSpecifications",
-      type: "group",
-      fields: [
-        {
-          name: "engineType",
-          type: "text",
-        },
-        {
-          name: "horsePower",
-          type: "number",
-        },
-        {
-          name: "torque",
-          type: "number",
-        },
-        {
-          name: "cylinders",
-          type: "number",
-        },
-      ],
+      name: "weight",
+      type: "number"
     },
     {
       name: "dimensions",
