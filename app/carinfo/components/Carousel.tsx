@@ -4,20 +4,22 @@ import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
-import { Car } from "@payload-types";
+import { Car, Media } from "@payload-types";
 
 interface ThumbProps {
+  image: {
+    url: string;
+    width: number;
+    height: number;
+  };
   selected: boolean;
-  image: { url: string; width: number; height: number };
   onClick: () => void;
 }
-
-interface SlideProps {
-  image: { url: string; alt: string; width: number; height: number };
-  id: string;
-}
-
 const Thumb = ({ selected, image, onClick }: ThumbProps) => {
+  if (!image.url || !image.width || !image.height) {
+    return null; // Пропустить, если данные некорректны.
+  }
+
   return (
     <div className={"embla-thumbs__slide"}>
       <button
@@ -29,7 +31,7 @@ const Thumb = ({ selected, image, onClick }: ThumbProps) => {
           src={image.url}
           alt="car"
           fill
-          sizes={`${image!.width}px ${image!.height}px`}
+          sizes={`${image.width}px ${image.height}px`}
           className={"object-cover embla-thumbs__slide__image".concat(
             selected ? " embla-thumbs__slide--selected" : ""
           )}
@@ -39,9 +41,8 @@ const Thumb = ({ selected, image, onClick }: ThumbProps) => {
   );
 };
 
-const Carousel = (data: Car["gallery"]) => {
-  const { images } = data;
-
+const Carousel = ({ gallery }: { gallery: Car["gallery"] }) => {
+  const images = gallery ?? [];
   const [emblaMainRef, emblaMainApi] = useEmblaCarousel({ loop: false }, [
     Autoplay({ stopOnMouseEnter: true }),
   ]);
@@ -74,18 +75,23 @@ const Carousel = (data: Car["gallery"]) => {
       <div className="embla__viewport relative" ref={emblaMainRef}>
         <div className="embla__container h-96">
           {images &&
-            images.map(({ image, id }: SlideProps) => (
-              <div className="embla__slide relative" key={id}>
-                <Image
-                  src={image!.url}
-                  alt={image!.alt}
-                  fill
-                  sizes={`${image!.width}px ${image!.height}px`}
-                  priority
-                  className="object-cover"
-                />
-              </div>
-            ))}
+            images.map(({ image, id }) => {
+              if (typeof image === "object" && image?.url) {
+                return (
+                  <div className="embla__slide relative" key={id}>
+                    <Image
+                      src={image.url}
+                      alt={image.alt || "Default alt text"}
+                      fill
+                      sizes={`${image.width || 100}px ${image.height || 100}px`}
+                      priority
+                      className="object-cover"
+                    />
+                  </div>
+                );
+              }
+              return null;
+            })}
         </div>
       </div>
 
@@ -93,27 +99,24 @@ const Carousel = (data: Car["gallery"]) => {
         <div className="embla-thumbs__viewport" ref={emblaThumbsRef}>
           <div className="embla-thumbs__container">
             {images &&
-              images.map(
-                (
-                  {
-                    image,
-                  }: {
-                    image: {
-                      sizes: {
-                        squere: { width: number; height: number; url: string };
-                      };
-                    };
-                  },
-                  i: number
-                ) => (
-                  <Thumb
-                    key={i}
-                    onClick={() => onThumbClick(i)}
-                    selected={i === selectedIndex}
-                    image={image!.sizes.squere}
-                  />
-                )
-              )}
+              images.map(({ image, id }, i) => {
+                if (typeof image === "object" && image?.sizes?.squere) {
+                  const square = image.sizes.squere;
+                  return (
+                    <Thumb
+                      key={i}
+                      onClick={() => onThumbClick(i)}
+                      selected={i === selectedIndex}
+                      image={{
+                        url: square.url || "/hero.png",
+                        width: square.width || 100,
+                        height: square.height || 100,
+                      }}
+                    />
+                  );
+                }
+                return null;
+              })}
           </div>
         </div>
       </div>

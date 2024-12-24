@@ -5,6 +5,8 @@ import configPromise from "@payload-config";
 import Image from "next/image";
 import { getPayload } from "payload";
 
+import { Media } from "@payload-types";
+
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const images = ["/hero.png", "/hero.png", "/hero.png", "/hero.png"];
 
@@ -34,19 +36,20 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     model,
   } = await data;
 
-  console.log(gallery[0].image.sizes);
-
   return (
     <div className="pt-16 mx-auto">
       <div className="bg-gray-100 p-4 mx-16 rounded-3xl mb-8 flex justify-between items-center">
         <div className="flex items-center space-x-4">
-          <Image
-            src={manufacturer?.logo?.thumbnailURL}
-            alt={`${manufacturer?.title} logo`}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
+          {/* Types check */}
+          {manufacturer && typeof manufacturer !== "string" && (
+            <Image
+              src={(manufacturer.logo as Media)?.thumbnailURL ?? ""}
+              alt={`${manufacturer.title ?? ""} logo`}
+              width={48}
+              height={48}
+              className="rounded-full"
+            />
+          )}
           <span className="text-xl font-semibold">{title}</span>
           <span className="text-lg">{year}</span>
         </div>
