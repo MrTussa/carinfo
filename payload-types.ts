@@ -137,6 +137,14 @@ export interface Car {
   model?: string | null;
   description?: string | null;
   year?: number | null;
+  engineSpecifications?: {
+    engineType?: string | null;
+    horsePower?: number | null;
+    torque?: number | null;
+    cylinders?: number | null;
+  };
+  acceleration?: string | null;
+  topSpeed?: number | null;
   transmission?:
     | (
         | 'Automatic Transmission'
@@ -163,12 +171,7 @@ export interface Car {
     | null;
   seatingCapacity?: number | null;
   bodyType?: ('Sedan' | 'SUV' | 'Hatchback' | 'Coupe' | 'Convertible' | 'Wagon' | 'Pickup Truck' | 'Van') | null;
-  engineSpecifications?: {
-    engineType?: string | null;
-    horsePower?: number | null;
-    torque?: number | null;
-    cylinders?: number | null;
-  };
+  weight?: number | null;
   dimensions?: {
     length?: number | null;
     width?: number | null;
@@ -199,6 +202,14 @@ export interface Manufacturer {
   description?: string | null;
   year?: number | null;
   logo?: (string | null) | Media;
+  imageCover?: (string | null) | Media;
+  locations?:
+    | {
+        location?: string | null;
+        locationImage?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   cars?: {
     docs?: (string | Car)[] | null;
     hasNextPage?: boolean | null;
@@ -347,6 +358,16 @@ export interface CarsSelect<T extends boolean = true> {
   model?: T;
   description?: T;
   year?: T;
+  engineSpecifications?:
+    | T
+    | {
+        engineType?: T;
+        horsePower?: T;
+        torque?: T;
+        cylinders?: T;
+      };
+  acceleration?: T;
+  topSpeed?: T;
   transmission?: T;
   fuelType?: T;
   manufacturer?: T;
@@ -365,14 +386,7 @@ export interface CarsSelect<T extends boolean = true> {
       };
   seatingCapacity?: T;
   bodyType?: T;
-  engineSpecifications?:
-    | T
-    | {
-        engineType?: T;
-        horsePower?: T;
-        torque?: T;
-        cylinders?: T;
-      };
+  weight?: T;
   dimensions?:
     | T
     | {
@@ -406,6 +420,14 @@ export interface ManufacturersSelect<T extends boolean = true> {
   description?: T;
   year?: T;
   logo?: T;
+  imageCover?: T;
+  locations?:
+    | T
+    | {
+        location?: T;
+        locationImage?: T;
+        id?: T;
+      };
   cars?: T;
   updatedAt?: T;
   createdAt?: T;
