@@ -39,13 +39,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="flex items-center space-x-4">
           {/* Types check */}
           {manufacturer && typeof manufacturer !== "string" && (
-            // <Image
-            //   src={(manufacturer.logo as Media)?.thumbnailURL ?? ""}
-            //   alt={`${manufacturer.title ?? ""} logo`}
-            //   width={48}
-            //   height={48}
-            //   className="rounded-full"
-            // />
             <LogoButton
               logo={(manufacturer.logo as Media)?.thumbnailURL ?? ""}
               width={48}

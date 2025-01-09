@@ -28,33 +28,33 @@ const CarCard = ({ car }: CarCardProps) => {
       .split(" ")
       .map((word) => word[0])
       .join("");
+  console.log(featuredImage);
 
   return (
     <div className="bg-primary-blue-100 transition-all hover:bg-white hover:shadow-md rounded-3xl group">
       <div className="relative w-full h-40 mb-3">
-        {featuredImage && model && (
-          <Image
-            src={featuredImage!.sizes.thumbnail.url}
-            alt={model}
-            fill
-            sizes="300px 160px"
-            priority
-            className="object-cover rounded-t-3xl"
-          />
-        )}
+        {featuredImage &&
+          typeof featuredImage === "object" &&
+          "sizes" in featuredImage &&
+          featuredImage.sizes &&
+          featuredImage.sizes.thumbnail &&
+          model && (
+            <Image
+              src={featuredImage.sizes.thumbnail.url || "/car-placeholder"}
+              alt={model}
+              fill
+              sizes="300px 160px"
+              className="rounded-t-3xl object-cover object-center"
+            />
+          )}
       </div>
       <div className="car-card">
         <div className="car-card__content">
           <h2 className="car-card__content-model">{model}</h2>
           <h3 className="car-card__content-manufacturer">
-            {manufacturer!.title}
+            {manufacturer && manufacturer.title}
           </h3>
         </div>
-        {/* <p className="car-card__price">
-        <span>
-          {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} сум
-        </span>
-      </p> */}
 
         <div className="relative flex w-full mt-2">
           <div className="car-card__icon-container">
@@ -97,12 +97,6 @@ const CarCard = ({ car }: CarCardProps) => {
           </div>
         </div>
       </div>
-
-      {/* <CarDetails
-        isOpen={isOpen}
-        closeModal={() => setIsOpen(false)}
-        car={car}
-      /> */}
     </div>
   );
 };
