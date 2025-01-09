@@ -6,7 +6,6 @@ import CustomFilter from "./CustomFilter"
 import SearchBar from "./SearchBar"
 import SeachManufacturer from "./SeachManufacturer"
 import CarCard from "./CarCard"
-import CarDetails from "./CarDetails"
 import ShowMore from "./ShowMore"
 import Carousel from "./Carousel"
 import LogoButton from "./LogoButton"
@@ -23,7 +22,6 @@ export {
     SearchBar,
     SeachManufacturer,
     CarCard,
-    CarDetails,
     ShowMore,
     Carousel,
     LogoButton,
