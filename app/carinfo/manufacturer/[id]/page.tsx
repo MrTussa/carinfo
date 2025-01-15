@@ -15,7 +15,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     depth: 2,
   });
 
-  const { title, description, logo, imageCover, year, cars } = data;
+  const { title, description, logo, imageCover, year, cars, locations } = data;
 
   const processedCars = await Promise.all(
     (cars?.docs &&
@@ -45,13 +45,14 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
       <div
         style={{
-          backgroundImage: `url(${(imageCover as Media).sizes?.banner?.url})`,
+          backgroundImage: `
+            url(${(imageCover as Media).sizes?.banner?.url})
+          `,
           backgroundSize: "cover",
-          backgroundPosition: "top",
         }}
-        className="py-8"
+        className="py-8 border-b-4 border-cyan-500"
       >
-        <section className="bg-gradient-to-r from-gray-50/100 to-gray-100/35 container mx-auto shadow-lg rounded-lg py-8 mb-12">
+        <section className="bg-gradient-to-r from-gray-50/100 to-gray-100/35 container mx-auto shadow-lg rounded-lg py-8 mb-8">
           <div className="mx-4 px-4">
             <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
               <Image
@@ -71,10 +72,29 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
           </div>
         </section>
+        {locations && (
+          <div className=" container mx-auto grid grid-cols-3 gap-8">
+            {locations.map((location, index) => (
+              <div
+                className=" bg-gradient-to-r from-gray-50/100 to-gray-100/75 shadow-lg rounded-lg flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6"
+                key={index}
+              >
+                <Image
+                  src={location.locationImage!.sizes.squere.url}
+                  alt="location"
+                  width={100}
+                  height={100}
+                  className="rounded-s-lg"
+                />
+                <h4 className="py-4 text-xl">{location.location}</h4>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="container mx-auto px-4 pb-12">
-        <section className="mb-16">
+        <section className="mt-6 mb-16">
           <h3 className="text-2xl font-semibold mb-8 text-center">
             Latest {title} models
           </h3>
@@ -83,18 +103,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
               <CarCard car={car} key={index} />
             ))}
           </div>
-        </section>
-
-        <section className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-lg p-8 text-center">
-          <h3 className="text-3xl font-bold mb-4">
-            Experience the Future of Driving
-          </h3>
-          <p className="text-xl mb-6">
-            Book a test drive today and feel the difference.
-          </p>
-          <button className="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-            Book Now
-          </button>
         </section>
       </div>
     </div>
