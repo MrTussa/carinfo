@@ -12,23 +12,32 @@ import {
 } from "@headlessui/react";
 import Image from "next/image";
 
-import { SeachManufacturerProps } from "@/app/carinfo/types";
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
 
-const SeachManufacturer = ({
+import { SeachManufacturerProps } from "@/app/carinfo/types";
+// TODO: Fix use client
+const SeachManufacturer = async ({
   manufacturer,
   setManufacturer,
 }: SeachManufacturerProps) => {
   const [query, setQuery] = useState("");
 
-  const filteredManufacterers =
-    query === ""
-      ? manufacturers
-      : manufacturers.filter((item) =>
-          item
-            .toLowerCase()
-            .replace(/\s_/g, "")
-            .includes(query.toLowerCase().replace(/\s_/g, ""))
-        );
+  const payload = getPayload({ config: configPromise });
+  const res = (await payload).find({
+    collection: "manufacturers",
+    limit: 10,
+    select: {
+      title: true,
+    },
+    where: {
+      title: {
+        contains: query,
+      },
+    },
+  });
+
+  const manufacturers = (await res).docs;
 
   return (
     <div className="search-manufacturer">
@@ -46,7 +55,7 @@ const SeachManufacturer = ({
           <div className="relative">
             <ComboboxInput
               className="search-manufacturer__input"
-              placeholder="Nexia"
+              placeholder="Porsche"
               displayValue={(manufacturer: string) => manufacturer}
               onChange={(e) => setQuery(e.target.value)}
             />
@@ -59,19 +68,23 @@ const SeachManufacturer = ({
               afterLeave={() => setQuery("")}
             >
               <ComboboxOptions className="absolute bg-white shadow-lg rounded-lg z-10">
-                {filteredManufacterers.map((item) => (
-                  <ComboboxOption
-                    key={item}
-                    value={item}
-                    className={({ focus }) =>
-                      `relative search-manufacturer__option ${
-                        focus ? "bg-primary-blue text-white" : "text-gray-900"
-                      }`
-                    }
-                  >
-                    {item}
-                  </ComboboxOption>
-                ))}
+                {!manufacturers
+                  ? null
+                  : manufacturers.map(({ id, title }) => (
+                      <ComboboxOption
+                        key={id}
+                        value={title}
+                        className={({ focus }) =>
+                          `relative search-manufacturer__option z-10 ${
+                            focus
+                              ? "bg-primary-blue text-white"
+                              : "text-gray-900"
+                          }`
+                        }
+                      >
+                        {title}
+                      </ComboboxOption>
+                    ))}
               </ComboboxOptions>
             </Transition>
           </div>

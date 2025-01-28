@@ -49,10 +49,12 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             url(${(imageCover as Media).sizes?.banner?.url})
           `,
           backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
         className="py-8 border-b-4 border-cyan-500"
       >
-        <section className="bg-gradient-to-r from-gray-50/100 to-gray-100/35 container mx-auto shadow-lg rounded-lg py-8 mb-8">
+        {/* MANUFACTURER HEADER */}
+        <section className="bg-gradient-to-r from-gray-50/100 to-gray-100/35 container mx-auto shadow-lg sm:rounded-lg rounded-none py-8 mb-8">
           <div className="mx-4 px-4">
             <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6">
               <Image
@@ -72,11 +74,14 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </div>
           </div>
         </section>
+
+        {/* LOCATIONS LIST */}
+
         {locations && (
-          <div className=" container mx-auto grid grid-cols-3 gap-8">
+          <div className=" container mx-auto grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
             {locations.map((location, index) => (
               <div
-                className=" bg-gradient-to-r from-gray-50/100 to-gray-100/75 shadow-lg rounded-lg flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6"
+                className=" bg-gradient-to-r from-gray-50/100 to-gray-100/75 shadow-lg rounded-lg flex flex-row items-center gap-1 sm:gap-0 space-y-0 md:space-x-6 sm:pr-6"
                 key={index}
               >
                 <Image
@@ -86,19 +91,19 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
                   height={100}
                   className="rounded-s-lg"
                 />
-                <h4 className="py-4 text-xl">{location.location}</h4>
+                <h4 className="xl:py-4 py-2 text-xl">{location.location}</h4>
               </div>
             ))}
           </div>
         )}
       </div>
-
+      {/* MODELS LIST */}
       <div className="container mx-auto px-4 pb-12">
         <section className="mt-6 mb-16">
           <h3 className="text-2xl font-semibold mb-8 text-center">
             Latest {title} models
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="home__cars-wrapper">
             {processedCars.map((car, index) => (
               <CarCard car={car} key={index} />
             ))}
