@@ -1,7 +1,5 @@
 "use client";
-import { useState, Fragment } from "react";
-import { manufacturers } from "../constants";
-
+import { useState, Fragment, useEffect } from "react";
 import {
   Combobox,
   ComboboxButton,
@@ -11,33 +9,41 @@ import {
   Transition,
 } from "@headlessui/react";
 import Image from "next/image";
-
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
-
 import { SeachManufacturerProps } from "@/app/carinfo/types";
-// TODO: Fix use client
-const SeachManufacturer = async ({
+
+const SeachManufacturer = ({
   manufacturer,
   setManufacturer,
 }: SeachManufacturerProps) => {
   const [query, setQuery] = useState("");
+  const [manufacturers, setManufacturers] = useState<
+    Array<{ id: string; title: string }>
+  >([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const payload = getPayload({ config: configPromise });
-  const res = (await payload).find({
-    collection: "manufacturers",
-    limit: 10,
-    select: {
-      title: true,
-    },
-    where: {
-      title: {
-        contains: query,
-      },
-    },
-  });
+  useEffect(() => {
+    const fetchManufacturers = async () => {
+      if (query.length > 0) {
+        setIsLoading(true);
+        try {
+          const response = await fetch(
+            `/api/manufacturers/find?where=${encodeURIComponent(query)}`
+          );
 
-  const manufacturers = (await res).docs;
+          const data = await response.json();
+          console.log(data);
+          setManufacturers(data.docs);
+        } catch (error) {
+          console.error("Search failed:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    const debounceTimer = setTimeout(fetchManufacturers, 300);
+    return () => clearTimeout(debounceTimer);
+  }, [query]);
 
   return (
     <div className="search-manufacturer">
@@ -59,32 +65,35 @@ const SeachManufacturer = async ({
               displayValue={(manufacturer: string) => manufacturer}
               onChange={(e) => setQuery(e.target.value)}
             />
-
             <Transition
               as={Fragment}
-              leave="transion ease-in duration-100"
+              leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
               afterLeave={() => setQuery("")}
             >
-              <ComboboxOptions className="absolute bg-white shadow-lg rounded-lg z-10">
-                {!manufacturers
-                  ? null
-                  : manufacturers.map(({ id, title }) => (
-                      <ComboboxOption
-                        key={id}
-                        value={title}
-                        className={({ focus }) =>
-                          `relative search-manufacturer__option z-10 ${
-                            focus
-                              ? "bg-primary-blue text-white"
-                              : "text-gray-900"
-                          }`
-                        }
-                      >
-                        {title}
-                      </ComboboxOption>
-                    ))}
+              <ComboboxOptions className="absolute bg-white shadow-lg rounded-lg z-10 w-full mt-1 max-h-60 overflow-auto">
+                {isLoading ? (
+                  <div className="px-4 py-2 text-gray-500">Loading...</div>
+                ) : manufacturers.length === 0 && query !== "" ? (
+                  <div className="px-4 py-2 text-gray-500">Nothing found</div>
+                ) : (
+                  manufacturers.map(({ id, title }) => (
+                    <ComboboxOption
+                      key={id}
+                      value={title}
+                      className={({ active }) =>
+                        `px-4 py-2 cursor-default ${
+                          active
+                            ? "bg-primary-blue text-white"
+                            : "text-gray-900"
+                        }`
+                      }
+                    >
+                      {title}
+                    </ComboboxOption>
+                  ))
+                )}
               </ComboboxOptions>
             </Transition>
           </div>
