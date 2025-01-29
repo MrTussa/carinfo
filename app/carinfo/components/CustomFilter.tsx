@@ -11,7 +11,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import { CustomFilterProps } from "@/app/carinfo/types";
-import { updateSearchParams } from "@/app/carinfo/utils";
+import { updateSearchParams } from "@payloadQueries";
 
 const CustomFilter = ({ title, options }: CustomFilterProps) => {
   const router = useRouter();
@@ -19,9 +19,8 @@ const CustomFilter = ({ title, options }: CustomFilterProps) => {
   const [selected, setSelected] = useState(options[0]);
 
   const handleUpdateParams = (e: { title: string; value: string }) => {
-    const newPathName = updateSearchParams(title, e.value.toLocaleLowerCase());
-
-    router.push(newPathName, { scroll: false });
+    // const newPathName = updateSearchParams(title, e.value.toLocaleLowerCase());
+    // router.push(newPathName, { scroll: false });
   };
 
   return (

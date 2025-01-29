@@ -39,8 +39,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       []
   );
 
-  console.log((imageCover as Media).sizes?.banner?.url);
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
       <div

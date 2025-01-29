@@ -28,7 +28,6 @@ const CarCard = ({ car }: CarCardProps) => {
       .split(" ")
       .map((word) => word[0])
       .join("");
-  console.log(featuredImage);
 
   return (
     <div className="bg-primary-blue-100 transition-all hover:bg-white hover:shadow-md rounded-3xl group">

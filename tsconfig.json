@@ -31,6 +31,9 @@
       "@payload-types": [
         "./payload-types.ts"
       ],
+      "@payloadQueries": [
+        "./app/carinfo/utils/payloadQueries.ts"
+      ]
     },
     "target": "ES2017"
   },
